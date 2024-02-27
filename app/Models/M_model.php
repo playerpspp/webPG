@@ -35,6 +35,11 @@ class M_model extends model
 		return $this->db->table($table)->getWhere($where)->getRow();
 	}
 
+	public function pajak($table)
+	{
+		return $this->db->table($table)->get()->getRow();
+	}
+
 	public function getRowArray($table, $where)
 	{
 		return $this->db->table($table)->getWhere($where)->getRowArray();
@@ -43,6 +48,11 @@ class M_model extends model
 	public function fusionRow($table1, $table2, $on ,$where)
 	{
 		return $this->db->table($table1)->join($table2, $on)->getWhere($where)->getRow();
+	}
+
+	public function fusion($table1, $table2, $on)
+	{
+		return $this->db->table($table1)->join($table2, $on)->get()->getResult();
 	}
 
 	public function fusionOderBy($table1, $table2, $on, $column)
@@ -55,11 +65,36 @@ class M_model extends model
 		return $this->db->table($table1)->join($table2, $on)->orderBy($column, 'ASC')->get()->getResult();
 	}
 
-	public function filter_income ($table, $awal,$akhir)
+	public function dashboard1($table1, $table2, $on, $column)
+	{
+		return $this->db->table($table1)
+    ->join($table2, $on)->orderBy($column, 'DESC')
+    ->where('tanggal_laporan', date('Y-m-d'))
+    ->get()->getResult();
+	}
+
+	public function dashboard2($table1, $table2, $on, $column)
+	{
+		return $this->db->table($table1)->join($table2, $on)->orderBy($column, 'ASC')
+		->where('tanggal_laporan', date('Y-m-d'))->get()->getResult();
+	}
+
+	public function filter_income($table, $awal,$akhir)
 	{
 		$query = $this->db->table('playground')
     ->join('permainan', 'playground.id_permainan_playground = permainan.id_permainan')
     ->where('playground.tanggal_laporan BETWEEN "'.$awal.'" AND "'.$akhir.'"')
+    ->get();
+
+return $query->getResult();
+
+	}
+
+	public function filter_outcome($table, $awal,$akhir)
+	{
+		$query = $this->db->table('pengeluaran')
+    ->join('pegawai', 'pengeluaran.maker_pengeluaran = pegawai.id_pegawai_user')
+    ->where('pengeluaran.tanggal_pengeluaran BETWEEN "'.$awal.'" AND "'.$akhir.'"')
     ->get();
 
 return $query->getResult();

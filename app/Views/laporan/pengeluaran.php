@@ -12,32 +12,34 @@
 						<div class="modal-dialog modal-xl">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h4 class="modal-title">Apakah anda yakin ingin menambah data pegawai?</h4>
+									<h4 class="modal-title">Apakah anda yakin ingin menambah data pengeluaran?</h4>
 									<button type="button" class="btn-close" data-dismiss="modal"></button>
 								</div>
-								<form id="imageForm" class="form-horizontal form-label-left" action="<?= base_url('Data_Pegawai/tambah')?>" method="post">
+								<form id="imageForm" class="form-horizontal form-label-left" action="<?= base_url('laporan/tambah_pengeluaran')?>" method="post">
 									<div class="modal-body">
 										<div class="row">
 											<div class="mb-3 col-md-6">
-												<label class="form-label">Nama Pegawai<span style="color: black;"> :</span></label>
-												<input type="text" id="nama_pegawai" name="nama_pegawai" class="form-control text-capitalize" placeholder="Nama Pegawai" autocomplete="on">
+												<label class="form-label">Tujuan Pengeluaran<span style="color: black;"> :</span></label>
+												<input type="text" id="tujuan_pengeluaran" name="tujuan_pengeluaran" class="form-control text-capitalize" placeholder="Tujuan Pengeluaran" autocomplete="on">
 											</div>
+											
 											<div class="mb-3 col-md-6">
-												<label class="form-label">No Telepon<span style="color: black;"> :</span></label>
-												<input type="number" id="no_telp" name="no_telp" class="form-control text-capitalize" placeholder="No Telepon" oninput="validateNumberInput(this)" autocomplete="on">
-											</div>
-											<div class="mb-3 col-md-6">
-												<label class="form-label">Username<span style="color: black;"> :</span></label>
-												<input type="text" id="username" name="username" class="form-control text-capitalize" placeholder="Username" autocomplete="on">
-											</div>
-											<div class="mb-3 col-md-6">
-												<label class="form-label">Level<span style="color: black;"> :</span></label>
-												<select id="level" class="form-control col-12" data-validate-length-range="6" data-validate-words="2" name="level" required="required">
-													<option>Pilih Level</option>
-													<option value="1">Super Admin</option>
-													<option value="2">Petugas Playground</option>
-												</select>
-											</div>
+													<label class="form-label">Jumlah Pengeluaran<span style="color: black;"> :</span></label>    
+													<div class="input-group mb-3 input-basic">
+														<span class="input-group-text">Rp</span>
+														<input type="text" id="jumlah_pengeluaran" name="jumlah_pengeluaran" class="form-control text-capitalize" placeholder="Jumlah Pengeluaran" oninput="validateNumberInput(this)" autocomplete="on">
+													</div>
+												</div>
+												<script>
+													function validateNumberInput(input) {
+														let value = input.value.replace(/\D/g, '');
+
+														let formattedValue = newIntl.NumberFormat('id-ID', { maximumFractionDigits: 0 }).format(Number(value));
+
+														input.value = formattedValue;
+													}
+												</script>
+											
 										</div>
 									</div>
 									<div class="modal-footer">
@@ -93,9 +95,10 @@
 					<thead>
 						<tr>
 							<th style="text-align: center;" width="100px">No.</th>
-							<th style="text-align: center;" width="100000px">Username</th>
-							<th style="text-align: center;" width="100000px">Nama Pegawai</th>
-							<th style="text-align: center;" width="100000px">No Telepon</th>
+							<th style="text-align: center;" width="100000px">Tujuan Pengeluaran</th>
+							<th style="text-align: center;" width="100000px">Jumlah Pengeluaran</th>
+                            <th style="text-align: center;" width="100000px">Tanggal Pengeluaran</th>
+                            <th style="text-align: center;" width="100000px">Maker</th>
 							<th style="text-align: center;" width="100000px">Action</th>
 						</tr>
 					</thead>
@@ -105,18 +108,15 @@
 						<tr>
 							
 							<td style="text-align: center;" class="text-capitalize"><?= $noo++ ?></td>
-							<td style="text-align: center;" class="text-capitalize"><?= $dataa->username ?></td>
-							<td style="text-align: center;" class="text-capitalize"><?= $dataa->nama_pegawai ?></td>
-							<td style="text-align: center;" class="text-capitalize"><?= $dataa->no_telp ?></td>
+							<td style="text-align: center;" class="text-capitalize"><?= $dataa->tujuan_pengeluaran ?></td>
+							<td style="text-align: center;" class="text-capitalize">Rp <?= number_format($dataa->jumlah_pengeluaran) ?></td>
+                            <td style="text-align: center;" class="text-capitalize"><?= $dataa->tanggal_pengeluaran ?></td>
+                            <td style="text-align: center;" class="text-capitalize"><?= $dataa->nama_pegawai ?></td>
 							<td>
 								<div class="text-center mb-1">
-									<button type="button" class="btn btn-info" onclick="openResetModal('<?= base_url('/Data_Pegawai/reset_password/'.$dataa->id_pegawai_user)?>')">
-										Reset Password
-									</button>
-									<a href="<?= base_url('/Data_Pegawai/edit/'.$dataa->id_pegawai_user) ?>" class="btn btn-warning">
-										Edit
-									</a>
-									<button type="button" class="btn btn-danger" onclick="openDeleteModal('<?= base_url('/Data_Pegawai/hapus/'.$dataa->id_pegawai_user)?>')">
+									
+									
+									<button type="button" class="btn btn-danger" onclick="openDeleteModal('<?= base_url('/laporan/hapus_pengeluaran/'.$dataa->id_pengeluaran)?>')">
 										Delete
 									</button>
 								</div>

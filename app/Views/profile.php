@@ -11,13 +11,16 @@
                         <tr>
                             <th>Level :</th>
                             <td class="text-capitalize"><?php 
-                            switch ($use->$level) {
+                            switch ($use->level) {
                                 case 1:
                                     echo "Admin";
+                                    break;
                                 case 2:
                                     echo "Petugas";
+                                    break;
                                 default:
                                     echo "HACKER KAN KAU";
+                                    break;
                             } ?> </td>
                         </tr>
                         
@@ -78,13 +81,7 @@
         <div class="card">
             <div class="card-body">
                 <form class="form-horizontal form-label-left" novalidate  action="<?= base_url('Profile/ganti_pw')?>" method="post">
-                <div class="item form-group">
-                      <label class="control-label col-md-12 col-sm-12 col-xs-12">Password<span style="color: black;"> :</span>
-                      </label>
-                      <div class="col-md-12 col-sm-12 col-xs-12">
-                        <input id="password" class="form-control col-md-12 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="password" placeholder="Password" required="required" type="text" value="<?= $use->password?>" disabled>
-                    </div>
-                </div>
+                
                 <div class="item form-group">
                   <label class="control-label col-md-12 col-sm-12 col-xs-12">Ganti Password Baru<span style="color: black;"> :</span>
                   </label>

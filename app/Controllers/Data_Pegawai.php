@@ -46,6 +46,9 @@ class Data_Pegawai extends BaseController
 
     public function tambah()
     {
+        if (!$this->checkAuth()) {
+            return redirect()->to(base_url('/home/dashboard'));
+        }
         $nama_pegawai=$this->request->getPost('nama_pegawai');
         $no_telp=$this->request->getPost('no_telp');
         $username=$this->request->getPost('username');
@@ -103,6 +106,10 @@ class Data_Pegawai extends BaseController
 
     public function aksi_edit()
     {
+
+        if (!$this->checkAuth()) {
+            return redirect()->to(base_url('/home/dashboard'));
+        }
         $id= $this->request->getPost('id');    
         $username= $this->request->getPost('username');
         $level= $this->request->getPost('level');

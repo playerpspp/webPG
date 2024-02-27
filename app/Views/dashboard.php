@@ -8,12 +8,13 @@
 					    display: none;
 					}
                 	</style>
-                    <table class="table items-table table-bordered table-striped verticle-middle table-responsive-sm">
-                        <thead>
+<table id="bootstrap-data-table" class="table table-striped table-bordered">
+                            <thead>
                             <tr>
-                                <th style="text-align: center;">Nama Anak</th>
-                                <th style="text-align: center;">Nama Permainan</th>
-                                <th style="text-align: center;">Durasi</th>
+                                <th style="text-align: center; width: 200px;">Nama Anak</th>
+                                <th style="text-align: center; width: 200px;">Nama Ortu</th>
+                                <th style="text-align: center; width: 200px;">Nama Permainan</th>
+                                <th style="text-align: center; width: 150px;">Durasi</th>
                                 <th style="text-align: center;" class="hidden">Action</th>
                             </tr>
                         </thead>
@@ -22,10 +23,10 @@
 $no = 1; // Initialize $no outside the loop
 foreach ($data as $dataa) {
     if ($dataa->status == "1") {
-        echo "Value of \$no inside loop: $no <br>"; // Debugging output
 ?>
         <tr>
             <td style="text-align: center;" class="text-capitalize"><?php echo $dataa->nama_anak ?></td>
+            <td style="text-align: center;" class="text-capitalize"><?php echo $dataa->nama_ortu?></td>
             <td style="text-align: center;" class="text-capitalize"><?php echo $dataa->nama_permainan ?></td>
             <td style="text-align: center;" class="text-capitalize">
                 <span id="countdown_<?php echo $no; ?>"></span>
@@ -83,12 +84,13 @@ foreach ($data as $dataa) {
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table items-table table-bordered table-striped verticle-middle table-responsive-sm">
-                        <thead>
+                <table id="bootstrap-data-table2" class="table table-striped table-bordered">
+                            <thead>
                             <tr>
-                                <th style="text-align: center;">Nama Anak</th>
-                                <th style="text-align: center;">Durasi</th>
-                                <th style="text-align: center;">Status</th>
+                                <th style="text-align: center; width: 200px;">Nama Anak</th>
+                                <th style="text-align: center; width: 200px;">Nama Ortu</th>
+                                <th style="text-align: center; width: 200px;">Durasi</th>
+                                <th style="text-align: center; width: 200px;">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -100,6 +102,7 @@ foreach ($data as $dataa) {
                             ?>
                             <tr>
                                 <td style="text-align: center;" class="text-capitalize"><?php echo $dataa->nama_anak?></td>
+                                <td style="text-align: center;" class="text-capitalize"><?php echo $dataa->nama_ortu?></td>
                                 <td style="text-align: center;" class="text-capitalize"><?php echo $dataa->durasi?> Jam</td>
                                 <td style="text-align: center;" class="text-capitalize">
                                     <?php 

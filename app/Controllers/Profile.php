@@ -3,9 +3,6 @@
 namespace App\Controllers;
 use CodeIgniter\Controllers;
 use App\Models\M_model;
-use Dompdf\Dompdf;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Profile extends BaseController
 {
@@ -22,6 +19,10 @@ class Profile extends BaseController
     }
     public function index()
     {
+        if (!$this->checkAuth()) {
+            return redirect()->to(base_url('/home/dashboard'));
+        }
+        
         $id=session()->get('id');
         $where2=array('id_user'=>$id);
         $where3=array('id_pegawai_user'=>$id);
@@ -41,6 +42,10 @@ class Profile extends BaseController
 
     public function ganti_pw()   
     {
+        if (!$this->checkAuth()) {
+            return redirect()->to(base_url('/home/dashboard'));
+        }
+
         $pass=$this->request->getPost('pw');
         $id=session()->get('id');
         $model= new M_model();

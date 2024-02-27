@@ -32,6 +32,9 @@ class Home extends BaseController
 
     public function aksi_login()
     {
+        if ($this->checkAuth()) {
+            return redirect()->to(base_url('/home/dashboard'));
+        }
         $n=$this->request->getPost('username'); 
         $p=$this->request->getPost('password');
 
@@ -60,28 +63,26 @@ class Home extends BaseController
 
     public function logout()
     {
-        if(session()->get('id') > 0) {
+       
             $model = new M_model();
             $id = session()->get('id');
 
             session()->destroy();
             return redirect()->to('/');
-        } else {
-            return redirect()->to('/Home/dashboard');
-        }
+        
     }
 
     public function dashboard()
     {
         if (!$this->checkAuth()) {
-            return redirect()->to(base_url('/home/dashboard'));
+            return redirect()->to(base_url('/home'));
         }
 
         $model=new M_model();
         $on='playground.id_permainan_playground=permainan.id_permainan';
-        $data['data']=$model->fusionOderBy('playground', 'permainan', $on, 'jam_mulai');
+        $data['data']=$model->dashboard1('playground', 'permainan', $on, 'jam_mulai');
 
-        $data['data2']=$model->fusionOderByASC('playground', 'permainan', $on, 'jam_selesai');
+        $data['data2']=$model->dashboard2('playground', 'permainan', $on, 'jam_selesai');
 
         $id=session()->get('id');
         $where=array('id_user'=>$id);
@@ -101,6 +102,10 @@ class Home extends BaseController
 
     public function edit_status($id_playground)
     {
+
+        if (!$this->checkAuth()) {
+            return redirect()->to(base_url('/home/dashboard'));
+        }
         if (!$this->request->getPost('edit_status_btn') !== null) {
             $model = new M_model();
 

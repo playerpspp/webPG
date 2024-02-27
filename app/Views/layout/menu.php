@@ -32,13 +32,14 @@
                <?php  if(session()->get('level')== 1){ ?>
 
                 <li class="label">Laporan</li>
-              <li><a href="/laporan"><i class="ti-info-alt"></i> Laporan Tiket</a></li>
+              <li><a href="/laporan"><i class="ti-book"></i> Laporan</a></li>
+              <li><a href="/laporan/pengeluaran"><i class="ti-shopping-cart"></i> pengeluaran</a></li>
 
               <?php  }else{}?>
 
               <br>
               <li class="label">Account</li>
-              <li><a href="/profile"><i class="ti-info-alt"></i> Profile</a></li>
+              <li><a href="/Profile"><i class="ti-info-alt"></i> Profile</a></li>
               <li><a href="/home/logout"><i class="ti-close"></i> Logout</a></li>
           </ul>
       </div>

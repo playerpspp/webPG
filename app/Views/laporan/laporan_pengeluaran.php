@@ -47,7 +47,7 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1>Laporan Pemasukan</h1>
+      <h1>Laporan Pengeluaran</h1>
     </div>
 
     <div class="table-container">
@@ -55,10 +55,9 @@
         <thead>
           <tr>
             <th class="text-center">Tanggal</th>
-            <th class="text-center">Nama Permainan</th>
-            <th class="text-center">Nama Anak</th>
-            <th class="text-center">Nama Orang Tua</th>
-            <th class="text-center">Harga</th>
+            <th class="text-center">Tujuan Pengeluaran</th>
+            <th class="text-center">Nama Maker</th>
+            <th class="text-center">Jumlah Pengeluaran</th>
           </tr>
         </thead>
         <tbody>
@@ -68,20 +67,19 @@
           foreach ($data as $dataa) {
             ?>
             <tr>
-              <td class="text-capitalize text-center"><?php echo $dataa->tanggal_laporan?></td>
-              <td class="text-capitalize text-center"><?php echo $dataa->nama_permainan?></td>
-              <td class="text-capitalize text-center"><?php echo $dataa->nama_anak?></td>
-              <td class="text-capitalize text-center"><?php echo $dataa->nama_ortu?></td>
-              <td class="text-center text-capitalize text-dark text-success">Rp <?php echo number_format($dataa->total_harga, 2, ',', '.'); ?></td>
+            <td class="text-capitalize text-center"><?php echo $dataa->tanggal_pengeluaran?></td>
+              <td class="text-capitalize text-center"><?php echo $dataa->tujuan_pengeluaran?></td>
+              <td class="text-capitalize text-center"><?php echo $dataa->nama_pegawai?></td>
+              <td style="text-align: center;" class="text-capitalize">Rp <?= number_format($dataa->jumlah_pengeluaran) ?></td>
             </tr>
 
             <?php
-            $total += $dataa->total_harga; 
+            $total += $dataa->jumlah_pengeluaran; 
           }
           ?>
           
           <tr>
-            <td colspan="3"></td>
+            <td colspan="2"></td>
             <td><b>TOTAL :</b></td>
             <td style="color: seagreen;"><b>Rp <?php echo number_format($total, 2, ',', '.'); ?></b></td>
 

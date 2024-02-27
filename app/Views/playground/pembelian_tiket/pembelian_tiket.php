@@ -10,6 +10,14 @@
 				            <i class="ti-solid ti-plus"></i> Tambah
 				        </button>
 
+						<?php  if(session()->get('level')== 1){ ?>
+						<a  href="<?= base_url('/Playground/pajak_pembelian_tiket' )?>" class="mx-2">
+							        <button type="button" class="btn btn-warning">
+							            Pajak
+							        </button>
+							    </a>
+								<?php  }else{}?>
+
 				        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 				            <div class="modal-dialog modal-xl">
 				                <div class="modal-content">
@@ -31,11 +39,22 @@
 									            </div>
 									            <div class="mb-3 col-md-6">
 									                <label class="form-label">Nama Anak<span style="color: black;"> :</span></label>
-									                <input type="text" id="nama_anak" name="nama_anak" class="form-control text-capitalize" placeholder="Nama Pemain" autocomplete="on">
+									                <input type="text" id="nama_anak" name="nama_anak" class="form-control text-capitalize" placeholder="Nama Anak" autocomplete="on">
+									            </div>
+												<div class="mb-3 col-md-6">
+									                <label class="form-label">Nama Orang Tua<span style="color: black;"> :</span></label>
+									                <input type="text" id="nama_ortu" name="nama_ortu" class="form-control text-capitalize" placeholder="Nama Orang Tua" autocomplete="on">
 									            </div>
 									            <div class="mb-3 col-md-6">
 									                <label class="form-label">Durasi<span style="color: black;"> :</span></label>
 									                <input type="text" id="durasi" name="durasi" class="form-control text-capitalize" placeholder="Durasi" oninput="Durasi(this); updateTotalHarga()" autocomplete="on">
+									            </div>
+												<div class="mb-3 col-md-6">
+									                <label class="form-label">Pajak<span style="color: black;"> :</span></label>
+									                <div class="input-group mb-3 input-basic">
+									                    <input readonly type="text" id="pajak" name="pajak" class="form-control text-capitalize" placeholder="Pajak" value="<?= $pajak->persen_pajak?>" autocomplete="on">
+									                    <span class="input-group-text">%</span>
+									                </div>
 									            </div>
 									            <div class="mb-3 col-md-6">
 									                <label class="form-label">Total Harga<span style="color: black;"> :</span></label>
@@ -67,13 +86,28 @@
 								        var durationInput = document.getElementById('durasi');
 								        var durationValue = durationInput.value.replace(/\D/g, '');
 
-								        if (selectedOptionIndex !== -1 && durationValue !== '') {
+										var tax = document.getElementById('pajak').value;
+
+										
+
+								        if (selectedOptionIndex !== -1 && durationValue !== '' && tax !=='') {
 								            var hargaPermainan = selectedOption.options[selectedOptionIndex].getAttribute('data-harga');
 
-								            var totalHarga = parseInt(hargaPermainan) * parseInt(durationValue);
+											var percent = parseInt(tax) / 100;
 
+											var totalHarga = parseInt(hargaPermainan) * parseInt(durationValue);
+
+											var jumlahPajak = totalHarga * percent;
+
+											var total = totalHarga + jumlahPajak;
+											console.log(totalHarga);
 								            var totalHargaInput = document.getElementById('total_harga');
-								            totalHargaInput.value = formatCurrency(totalHarga);
+								            totalHargaInput.value = total;
+											console.log(durationValue);
+											console.log(hargaPermainan);
+											console.log(percent);
+											console.log(jumlahPajak);
+											
 								        } else {
 								            var totalHargaInput = document.getElementById('total_harga');
 								            totalHargaInput.value = '';
@@ -91,14 +125,15 @@
 				    </div>
 				</div>
 
-				<table id="example" class="table items-table table table-bordered table-striped verticle-middle table-responsive-sm" style="min-width: 100%">
-					<thead>
+				<table id="bootstrap-data-table" class="table table-striped table-bordered">					<thead>
 						<tr>
-							<th style="text-align: center;">Nama Permainan</th>
-							<th style="text-align: center;">Nama Anak</th>
-							<th style="text-align: center;">Durasi</th>
-							<th style="text-align: center;">Total Harga</th>
-							<th style="text-align: center;">Action</th>
+							<th style="text-align: center;" width="1000px">No.</th>
+							<th style="text-align: center;" width="1000px">Nama Permainan</th>
+							<th style="text-align: center;" width="1000px">Nama Anak</th>
+							<th style="text-align: center;" width="1000px">Nama Orang Tua</th>
+							<th style="text-align: center;" width="1000px">Durasi</th>
+							<th style="text-align: center;" width="1000px">Total Harga</th>
+							<th style="text-align: center;" width="1000px">Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -106,12 +141,19 @@
                     $no=1;
                     foreach ($data as $dataa){?>
 						<tr>
+							<td style="text-align: center;" class="text-capitalize"><?php echo $no++ ?></td>
 							<td style="text-align: center;" class="text-capitalize"><?php echo $dataa->nama_permainan ?></td>
 							<td style="text-align: center;" class="text-capitalize"><?php echo $dataa->nama_anak ?></td>
+							<td style="text-align: center;" class="text-capitalize"><?php echo $dataa->nama_ortu ?></td>
 							<td style="text-align: center;" class="text-capitalize"><?php echo $dataa->durasi ?> Jam</td>
 							<td style="text-align: center;" class="text-capitalize">Rp <?php echo number_format($dataa->total_harga) ?></td>
 							<td>
 							<div class="text-center mb-1">
+							<a target="_blank" href="<?= base_url('/Playground/print_pembelian_tiket/'.$dataa->id_playground )?>" class="mx-2">
+							        <button type="button" class="btn btn-warning">
+							            <i class="ti-solid ti-receipt"></i>
+							        </button>
+							    </a>
 							    <a onclick="openDeleteModal('<?= base_url('/Playground/hapus_pembelian_tiket/'.$dataa->id_playground )?>')" class="mx-2">
 							        <button type="button" class="btn btn-danger">
 							            <i class="ti-solid ti-trash"></i>
